@@ -1,37 +1,40 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 export default function App() {
   const [validCode, setValidCode] = useState('');
   const [verifyResult, setVerifyResult] = useState(null);
 
   const checkValidCode = () => {
-    const validCodeRegex = /^1234$/;  //先設一個簡單的Regex, 檢核要是1234
+    const validCodeRegex = /^1234$/;
     setVerifyResult(validCodeRegex.test(validCode));
   }
 
   return (
-    <View style={styles.container}>
-      <TextInput style={styles.textInput}
-        maxLength={4}
-        onChangeText={(text) => {
-          setValidCode(text);
-          setVerifyResult(null);
-        }}
-        keyboardType={'numeric'}
-        value={validCode}
-        secureTextEntry={true}
-        autoFocus={true}></TextInput>
-      <TouchableOpacity style={styles.button}
-        onPress={checkValidCode}>
-        <Text style={styles.buttonText}>Enter</Text>
-      </TouchableOpacity>
-      {validCode.length !== 4 && <Text style={styles.failMsg}>請輸入密碼</Text>}
-      {validCode.length === 4 && verifyResult && <Text style={styles.successMsg}>輸入成功</Text>}
-      {validCode.length === 4 && verifyResult === false && <Text style={styles.failMsg}>輸入錯誤</Text>}
-      <StatusBar style="auto" />
-    </View>
+    // 頁面包TouchableWithoutFeedback, 來做鍵盤收合動作
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <TextInput style={styles.textInput}
+          maxLength={4}
+          onChangeText={(text) => {
+            setValidCode(text);
+            setVerifyResult(null);
+          }}
+          keyboardType={'numeric'}
+          value={validCode}
+          secureTextEntry={true}
+          autoFocus={true}></TextInput>
+        <TouchableOpacity style={styles.button}
+          onPress={() => { Keyboard.dismiss(); checkValidCode(); }}>
+          <Text style={styles.buttonText}>Enter</Text>
+        </TouchableOpacity>
+        {validCode.length !== 4 && <Text style={styles.failMsg}>請輸入密碼</Text>}
+        {validCode.length === 4 && verifyResult && <Text style={styles.successMsg}>輸入成功</Text>}
+        {validCode.length === 4 && verifyResult === false && <Text style={styles.failMsg}>輸入錯誤</Text>}
+        <StatusBar style="auto" />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
