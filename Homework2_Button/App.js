@@ -123,15 +123,15 @@ export default function App() {
             </View>
             <View style={{ flex: 0.5, flexDirection: 'row' }}>
               <View style={{ flex: 0.5, alignItems: 'center' }}>
-                <TouchableOpacity style={StyleSheet.compose(styles.button, { height: 90, width: 90, marginTop: 20 })}
+                <TouchableOpacity style={[styles.button, { height: 90, width: 90, marginTop: 20 }]}
                   onPress={() => { if (counter > 0) setCounter(counter - 1) }}>
-                  <Text style={StyleSheet.compose(styles.buttonText, { fontSize: 50 })}>-</Text>
+                  <Text style={[styles.buttonText, { fontSize: 50 }]}>-</Text>
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 0.5, alignItems: 'center' }}>
-                <TouchableOpacity style={StyleSheet.compose(styles.button, { height: 90, width: 90, marginTop: 20 })}
+                <TouchableOpacity style={[styles.button, { height: 90, width: 90, marginTop: 20 }]}
                   onPress={() => setCounter(counter + 1)}>
-                  <Text style={StyleSheet.compose(styles.buttonText, { fontSize: 50 })}>+</Text>
+                  <Text style={[styles.buttonText, { fontSize: 50 }]}>+</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -148,7 +148,7 @@ export default function App() {
               <View style={{ flex: 0.5, flexDirection: 'column', justifyContent: 'flex-end' }}>
                 {/* 剩餘時間 */}
                 <View style={{ flexDirection: 'row', alignSelf: 'flex-end', paddingRight: 30 }}>
-                  <Text style={StyleSheet.compose(styles.text, { fontSize: 50 })}> {formattedTime(remainSeconds)}</Text>
+                  <Text style={[styles.text, { fontSize: 50 }]}> {formattedTime(remainSeconds)}</Text>
                 </View>
                 {/* 設定時間 */}
                 <View style={{ flexDirection: 'row', alignSelf: 'flex-end', paddingRight: 30 }}>
@@ -170,7 +170,7 @@ export default function App() {
                   </Picker>
                 </View>
                 <View style={{ flex: 1, height: 190, justifyContent: 'center' }}>
-                  <Text style={StyleSheet.compose(styles.text, { fontSize: 20 })}>小時</Text>
+                  <Text style={[styles.text, { fontSize: 20 }]}>小時</Text>
                 </View>
                 <View style={{ flex: 2, height: 200 }}>
                   <Picker
@@ -182,7 +182,7 @@ export default function App() {
                   </Picker>
                 </View>
                 <View style={{ flex: 1, height: 190, justifyContent: 'center' }}>
-                  <Text style={StyleSheet.compose(styles.text, { fontSize: 18 })}>分鐘</Text>
+                  <Text style={[styles.text, { fontSize: 18 }]}>分鐘</Text>
                 </View>
                 <View style={{ flex: 2, height: 200 }}>
                   <Picker
@@ -194,14 +194,14 @@ export default function App() {
                   </Picker>
                 </View>
                 <View style={{ flex: 1, height: 190, justifyContent: 'center' }}>
-                  <Text style={StyleSheet.compose(styles.text, { fontSize: 18 })}>秒</Text>
+                  <Text style={[styles.text, { fontSize: 18 }]}>秒</Text>
                 </View>
               </View >
             }
             <View style={{ flex: 0.5, flexDirection: 'row', alignContent: 'flex-start', paddingTop: 20 }}>
               <View style={{ flex: 0.5, alignItems: 'center' }}>
                 {!isRunning &&
-                  <TouchableOpacity style={StyleSheet.compose(styles.button, { height: 50, width: 130 })}
+                  <TouchableOpacity style={[styles.button, { height: 50, width: 130 }]}
                     onPress={() => {
                       setTimerSet({ hours: 0, minutes: 10, seconds: 0 });
                     }}>
@@ -210,7 +210,7 @@ export default function App() {
                 }
               </View>
               <View style={{ flex: 0.5, alignItems: 'center' }}>
-                <TouchableOpacity style={StyleSheet.compose(styles.button, { height: 50, width: 130 })}
+                <TouchableOpacity style={[styles.button, { height: 50, width: 130 }]}
                   onPress={() => isRunning ? stopTimer() : startTimer()}>
                   <Text style={styles.buttonText}>{isRunning ? 'Stop' : 'Start'}</Text>
                 </TouchableOpacity>
@@ -226,7 +226,7 @@ export default function App() {
             </View>
             <View style={{ flex: 0.7, alignItems: 'center' }}>
               <View style={{ flexDirection: 'row' }}>
-                <TouchableOpacity style={StyleSheet.compose(styles.calculateButton, { width: '43%', aspectRatio: 2 })}
+                <TouchableOpacity style={[styles.calculateButton, { width: '43%', aspectRatio: 2 }]}
                   onPress={() => handleCalculatorPress('AC')}>
                   <Text style={styles.buttonText}>AC</Text>
                 </TouchableOpacity>
@@ -294,7 +294,7 @@ export default function App() {
                 </TouchableOpacity>
               </View>
               <View style={{ flexDirection: 'row' }}>
-                <TouchableOpacity style={StyleSheet.compose(styles.calculateButton, { width: '43%', aspectRatio: 2 })}
+                <TouchableOpacity style={[styles.calculateButton, { width: '43%', aspectRatio: 2 }]}
                   onPress={() => handleCalculatorPress('0')}>
                   <Text style={styles.buttonText}>0</Text>
                 </TouchableOpacity>
