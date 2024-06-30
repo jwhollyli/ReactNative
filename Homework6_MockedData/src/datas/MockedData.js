@@ -1,11 +1,11 @@
 //每筆記帳紀錄資料
-const expenseData = [
+const MOCKED_DATA = [
     {
         //Fix: Warning: Each child in a list should have a unique "key" prop.
         //Check the render method of `RecordScreen`. See https://reactjs.org/link/warning-keys for more information.
         id: 0, // Used in JSX as a key
         date: '2024-05-01',
-        iconName: 'car',
+        categoryImg: require('../../assets/img/Car.png'),
         category: 'trafic',
         categoryName: '交通',
         title: '加油',
@@ -15,7 +15,7 @@ const expenseData = [
     {
         id: 1,
         date: '2024-05-01',
-        iconName: 'fast-food',
+        categoryImg: require('../../assets/img/Food.png'),
         category: 'meal',
         categoryName: '餐費',
         title: '午餐',
@@ -25,7 +25,7 @@ const expenseData = [
     {
         id: 2,
         date: '2024-05-01',
-        iconName: 'fast-food',
+        categoryImg: require('../../assets/img/Food.png'),
         category: 'meal',
         categoryName: '餐費',
         title: '下午茶',
@@ -35,7 +35,7 @@ const expenseData = [
     {
         id: 3,
         date: '2024-05-01',
-        iconName: 'fast-food',
+        categoryImg: require('../../assets/img/Food.png'),
         category: 'meal',
         categoryName: '餐費',
         title: '晚餐',
@@ -45,7 +45,7 @@ const expenseData = [
     {
         id: 4,
         date: '2024-05-01',
-        iconName: 'fast-food',
+        categoryImg: require('../../assets/img/Food.png'),
         category: 'meal',
         categoryName: '餐費',
         title: '消夜',
@@ -55,7 +55,7 @@ const expenseData = [
     {
         id: 5,
         date: '2024-05-02',
-        iconName: 'car',
+        categoryImg: require('../../assets/img/Car.png'),
         category: 'trafic',
         categoryName: '交通',
         title: '停車費',
@@ -65,7 +65,7 @@ const expenseData = [
     {
         id: 6,
         date: '2024-05-02',
-        iconName: 'fast-food',
+        categoryImg: require('../../assets/img/Food.png'),
         category: 'meal',
         categoryName: '餐費',
         title: '家庭聚餐',
@@ -75,7 +75,7 @@ const expenseData = [
     {
         id: 7,
         date: '2024-05-02',
-        iconName: 'fast-food',
+        categoryImg: require('../../assets/img/Food.png'),
         category: 'meal',
         categoryName: '餐費',
         title: '約會',
@@ -85,7 +85,7 @@ const expenseData = [
     {
         id: 8,
         date: '2024-05-04',
-        iconName: 'school',
+        categoryImg: require('../../assets/img/School.png'),
         category: 'learning',
         categoryName: '學習',
         title: '小孩學費',
@@ -95,7 +95,7 @@ const expenseData = [
     {
         id: 9,
         date: '2024-05-04',
-        iconName: 'school',
+        categoryImg: require('../../assets/img/School.png'),
         category: 'learning',
         categoryName: '學習',
         title: '小孩才藝班',
@@ -105,6 +105,7 @@ const expenseData = [
     {
         id: 10,
         date: '2024-05-04',
+        categoryImg: require('../../assets/img/Necessity.png'),
         iconName: 'cart',
         category: 'necessity',
         categoryName: '日用品',
@@ -115,7 +116,7 @@ const expenseData = [
     {
         id: 11,
         date: '2024-05-04',
-        iconName: 'fast-food',
+        categoryImg: require('../../assets/img/Food.png'),
         category: 'meal',
         categoryName: '餐費',
         title: '午餐',
@@ -125,7 +126,7 @@ const expenseData = [
     {
         id: 12,
         date: '2024-05-05',
-        iconName: 'fast-food',
+        categoryImg: require('../../assets/img/Food.png'),
         category: 'meal',
         categoryName: '餐費',
         title: '家庭聚餐',
@@ -135,7 +136,7 @@ const expenseData = [
     {
         id: 13,
         date: '2024-05-05',
-        iconName: 'car',
+        categoryImg: require('../../assets/img/Car.png'),
         category: 'trafic',
         categoryName: '交通',
         title: '停車費',
@@ -145,7 +146,7 @@ const expenseData = [
     {
         id: 14,
         date: '2024-05-06',
-        iconName: 'fast-food',
+        categoryImg: require('../../assets/img/Food.png'),
         category: 'meal',
         categoryName: '餐費',
         title: '家庭聚餐',
@@ -157,13 +158,13 @@ const expenseData = [
 //依照日期篩選的分類加總金額資料
 //date: yyyy-MM-dd
 export const getCategoryData = (date) => {
-    const filteredExpenses = expenseData.filter((item) => item.date === date);
+    const filteredExpenses = MOCKED_DATA.filter((item) => item.date === date);
     const categoryList = filteredExpenses.reduce((accumulator, currentItem) => {
         if (!accumulator[currentItem.category]) {
             accumulator[currentItem.category] = {
                 category: currentItem.category,
                 categoryName: currentItem.categoryName,
-                iconName: currentItem.iconName,
+                categoryImg: currentItem.categoryImg,
                 amount: 0,
             };
         }
@@ -178,7 +179,7 @@ export const getCategoryData = (date) => {
 //date: yyyy-MM-dd
 //categyry: 分類代碼, ex: meal, traffic, necessity, learning
 export const getExpenseData = ({ date, category }) => {
-    return expenseData.filter((item) => {
+    return MOCKED_DATA.filter((item) => {
         if (date !== '' && category !== '') {
             return item.date === date && item.category === category;
         } else if (date !== '') {

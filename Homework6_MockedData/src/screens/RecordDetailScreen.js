@@ -1,5 +1,4 @@
-import { Button, StyleSheet, Text, View, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Button, Text, View, ScrollView, Image } from 'react-native';
 import React, { useEffect } from 'react';
 import { recordStyle } from '../styles/recordStyle';
 
@@ -30,14 +29,13 @@ export default function RecordDetailScreen(props) {
                     </View>
                     <View style={recordStyle.textContainer}>
                         <View style={recordStyle.iconBackground}>
-                            <Ionicons name={props.route.params.item.iconName} size={36} color='#DDB892' />
+                            <Image source={props.route.params.item.categoryImg} style={recordStyle.icon} />
                         </View>
                         <Text style={recordStyle.categoryNameText}>
                             {props.route.params.item.categoryName}
                         </Text>
                     </View>
                 </View>
-                <View style={recordStyle.hr}></View>
                 {/* Name */}
                 <View style={recordStyle.nameContainer}>
                     <View style={recordStyle.labelContainter}>

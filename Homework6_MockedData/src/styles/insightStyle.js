@@ -50,7 +50,7 @@ export const insightStyle = StyleSheet.create({
     categoryNameText: { fontSize: 20, fontWeight: 'bold', color: '#DDB892', margin: 5 },
     totalAmountText: { fontSize: 24, textAlign: 'center', fontWeight: 'bold', color: '#3B3017' },
     expenseDataContainer: { flexDirection: 'row', alignItems: 'center', width: '90%', alignSelf: 'center' },
-    hr: {
+    seperator: {
         borderBottomWidth: 1, borderBottomColor: '#F9EFDC',
         marginVertical: 10, width: '90%', alignSelf: 'center'
     },
@@ -81,5 +81,9 @@ export const insightStyle = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'right',
         textAlignVertical: 'center'
-    }
+    },
+    icon: {
+        height: 36,
+        width: 36,
+    },
 });

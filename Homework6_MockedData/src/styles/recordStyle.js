@@ -68,18 +68,15 @@ export const recordStyle = StyleSheet.create({
         borderRadius: 25,
         backgroundColor: '#F9EFDC',
     },
+    icon: {
+        height: 36,
+        width: 36,
+    },
     categoryNameText: {
         fontSize: 16,
         color: '#3B3017',
         alignSelf: 'center',
         marginLeft: 5
-    },
-    hr: {
-        borderBottomWidth: 1,
-        borderBottomColor: '#DDB892',
-        marginVertical: 10,
-        width: '90%',
-        alignSelf: 'center'
     },
     nameContainer: {
         flexDirection: 'row',

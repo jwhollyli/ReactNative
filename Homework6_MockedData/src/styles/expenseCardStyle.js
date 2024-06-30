@@ -25,6 +25,10 @@ export const expenseCardStyle = (screenWidth) => StyleSheet.create({
         borderRadius: 25,
         backgroundColor: '#F9EFDC',
     },
+    icon: {
+        height: 36,
+        width: 36,
+    },
     iconContainer: {
         flex: 0.2,
     },

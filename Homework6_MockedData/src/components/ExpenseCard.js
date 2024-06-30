@@ -1,11 +1,9 @@
-import { TouchableOpacity, Text, View } from 'react-native';
+import { TouchableOpacity, Text, View, Image } from 'react-native';
 import PropTypes from 'prop-types';
-import { Ionicons } from '@expo/vector-icons';
 
 // Fix: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.
 const ExpenseCard = (props = {
     category: 'none',
-    iconName: 'category',
     title: '',
     content: '',
     amount: 0,
@@ -17,7 +15,7 @@ const ExpenseCard = (props = {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={props.styleSheet.iconContainer}>
                     <View style={props.styleSheet.iconBackground}>
-                        <Ionicons name={props.iconName} size={36} color='#DDB892' />
+                        <Image source={props.categoryImg} style={props.styleSheet.icon} />
                     </View>
                 </View>
                 <View style={props.styleSheet.middleContainer}>
@@ -26,8 +24,8 @@ const ExpenseCard = (props = {
                 </View>
                 <View style={props.styleSheet.amountContainger}>
                     <Text style={props.styleSheet.amount}>
-                        {props.amount.toLocaleString('en-US',
-                            { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })}
+                        {props.amount ? props.amount.toLocaleString('en-US',
+                            { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }) : ''}
                     </Text>
                 </View>
             </View>
@@ -37,18 +35,10 @@ const ExpenseCard = (props = {
 
 export default ExpenseCard;
 
-// ExpenseCard.defaultProps = {
-//     category: 'none',
-//     iconName: 'category',
-//     title: '',
-//     content: '',
-//     amount: 0,
-// }
-
 ExpenseCard.propTypes = {
     date: PropTypes.string.isRequired,
     styleSheet: PropTypes.object.isRequired,
-    iconName: PropTypes.string,
+    categoryImg: PropTypes.number.isRequired,
     category: PropTypes.string.isRequired,
     categoryName: PropTypes.string.isRequired,
     title: PropTypes.string,

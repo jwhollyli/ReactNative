@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import { Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { PieChart } from "react-native-gifted-charts";
-import { getCategoryData } from '../datas/demoData';
+import * as MOCKED_DATA from '../datas/MockedData';
 import { insightStyle } from '../styles/insightStyle';
 //npm install react-native-gifted-charts react-native-linear-gradient react-native-svg
 
@@ -16,23 +16,30 @@ export default function InsightScreen(props) {
     //下方區塊-圖表
     // const [selectedPie, setSelectedPie] = useState('');
     const colorValues = ['#E9EDC9', '#CCDFBB', '#D9F0DD', '#AAB7A8', '#CCD5AE'];
-    // 依照日期篩選PeiChart顯示的資料
-    const selectedDatas = getCategoryData(`${selectedYearMonth}-${selectedDateTab}`);
-    // Pie中央顯示的總金額
-    const totalAmount = selectedDatas.reduce((total, item) => total + item.amount, 0);
-    // 調整選完成的chartDatas, 調整內容的text為name + 比例%, 並加上指定的顏色
-    const chartDatas = selectedDatas.map((item, index) => {
-        return {
-            category: item.category,
-            categoryName: item.categoryName,
-            iconName: item.iconName,
-            text: `${item.categoryName} ${((item.amount / totalAmount) * 100).toFixed(2)}%`,   //Pie文字
-            value: item.amount,
-            color: colorValues[index],  //Pie顏色
-            shiftTextX: -10,    //調整顯示文字位置X
-            shiftTextY: +10,    //調整顯示文字位置Y
-        }
-    });
+    const [chartAmount, setChartAmount] = useState(0);
+    const [chartDataSource, setChartDataSource] = useState([]);
+
+    useEffect(() => {
+        // 依照日期篩選PeiChart顯示的資料
+        var selectedDatas = MOCKED_DATA.getCategoryData(`${selectedYearMonth}-${selectedDateTab}`);
+        // Pie中央顯示的總金額
+        var totalAmount = selectedDatas.reduce((total, item) => total + item.amount, 0);
+        // 調整選完成的chartDatas, 調整內容的text為name + 比例%, 並加上指定的顏色
+        var chartDatas = selectedDatas.map((item, index) => {
+            return {
+                category: item.category,
+                categoryName: item.categoryName,
+                categoryImg: item.categoryImg,
+                text: `${item.categoryName} ${((item.amount / totalAmount) * 100).toFixed(2)}%`,   //Pie文字
+                value: item.amount,
+                color: colorValues[index],  //Pie顏色
+                shiftTextX: -10,    //調整顯示文字位置X
+                shiftTextY: +10,    //調整顯示文字位置Y
+            }
+        });
+        setChartAmount(totalAmount);
+        setChartDataSource(chartDatas);
+    }, [selectedDateTab]);//依照選擇的日期重新計算PieChart的資料
     return (
         <View style={insightStyle.container}>
             {/* 上方區塊-日期選擇 */}
@@ -60,12 +67,12 @@ export default function InsightScreen(props) {
             >
                 {/* https://github.com/Abhinandan-Kushwaha/react-native-gifted-charts/blob/e98549604b1d80af9b6fe8e8e2984d0ce472f8f1/docs/PieChart/PieChartProps.md */}
                 {/* 當月無支出時, 顯示No records */}
-                {totalAmount === 0 ?
+                {chartAmount === 0 ?
                     <Text style={insightStyle.text}>No records</Text>
                     :
-                    <PieChart data={chartDatas} donut
+                    <PieChart data={chartDataSource} donut
                         centerLabelComponent={() => (
-                            <Text style={insightStyle.text}>{totalAmount.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })}</Text>
+                            <Text style={insightStyle.text}>{chartAmount.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })}</Text>
                         )}
                         showText
                         textColor='#3B3017'
@@ -80,7 +87,8 @@ export default function InsightScreen(props) {
                         onPress={(item) => {
                             props.navigation.push('InsightDetail', { date: `${selectedYearMonth}-${selectedDateTab}`, item: item })
                         }}
-                    />}
+                    />
+                }
             </View>
         </View>
     );
