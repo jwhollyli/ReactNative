@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View, FlatList, Image, TouchableOpacity, Dimensions } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
@@ -6,9 +6,11 @@ import * as StorageHelper from '../helpers/StorageHelper';
 import { useTheme } from '../contexts/ThemeContext';
 import createGlobalStyles from '../styles/GlobalStyles';
 import createPickerSelectStyles from '../styles/PickerSelectStyles';
-import { createStyles } from '../styles/screens/HomeScreen.style';
+import createStyles from '../styles/screens/HomeScreen.style';
 // npm install react-native-picker-select
 // npm install @react-native-picker/picker
+
+// TODO: 增加載入動畫
 export default function HomeScreen(props) {
     const [isLoading, setIsLoading] = useState(true);
     const [dataSource, setDataSource] = useState([]);                   //地方美食公開資料原始清單
@@ -24,41 +26,42 @@ export default function HomeScreen(props) {
     const { colors } = useTheme();
     const globalStyles = createGlobalStyles(colors);
     const styles = createStyles(colors, Dimensions.get('window').width);
-    console.log(styles);
     const pickerSelectStyles = createPickerSelectStyles(colors);
 
     // 取得農村地方美食小吃特色料理 公開資料
     useEffect(() => {
+        // 取得地方美食清單, 並依照資料彙整City+Town Unique資料
+        const fetchData = async () => {
+            const REQUEST_URL = 'https://data.moa.gov.tw/Service/OpenData/ODwsv/ODwsvTravelFood.aspx';
+            try {
+                let response = await fetch(REQUEST_URL);
+                let result = await response.json();
+                setDataSource(result);
+                // 取得City+Town Unique資料
+                let cityTown = Array.from(new Set(result.map(item => `${item.City}-${item.Town}`)));
+                setCityTownDataSource(cityTown);
+                // City下拉選單選項(去除重複值)
+                let cities = Array.from(new Set(result.map(item => item.City)));
+                setCityDataSource(cities);
+                setIsLoading(false);
+            } catch (error) {
+                console.error('Failed to fetch data:', error);
+            }
+        };
+        // 取得我的最愛地方美食清單
+        const loadMyFavoritePlaces = async () => {
+            try {
+                let getMyFavoritePlaces = await StorageHelper.getMySetting('myFavoritePlaces');
+                if (getMyFavoritePlaces) {
+                    setMyFavoritePlaces(JSON.parse(getMyFavoritePlaces));
+                }
+            } catch (error) {
+                console.error('Failed to load myFavoritePlaces:', error);
+            }
+        }
         fetchData();
         loadMyFavoritePlaces();
     }, []);
-
-    // 取得地方美食清單, 並依照資料彙整City+Town Unique資料
-    const fetchData = async () => {
-        const REQUEST_URL = 'https://data.moa.gov.tw/Service/OpenData/ODwsv/ODwsvTravelFood.aspx';
-        try {
-            let response = await fetch(REQUEST_URL);
-            let result = await response.json();
-            setDataSource(result);
-            // 取得City+Town Unique資料
-            let cityTown = Array.from(new Set(result.map(item => `${item.City}-${item.Town}`)));
-            setCityTownDataSource(cityTown);
-            // City下拉選單選項(去除重複值)
-            let cities = Array.from(new Set(result.map(item => item.City)));
-            setCityDataSource(cities);
-            setIsLoading(false);
-        } catch (error) {
-            console.error('fetch data error', error);
-        }
-    };
-
-    // 取得我的最愛地方美食清單
-    const loadMyFavoritePlaces = async () => {
-        let getMyFavoritePlaces = await StorageHelper.getMySetting('myFavoritePlaces');
-        if (getMyFavoritePlaces) {
-            setMyFavoritePlaces(JSON.parse(getMyFavoritePlaces));
-        }
-    }
 
     // 更新Town下拉選單選項
     useEffect(() => {
@@ -132,9 +135,8 @@ export default function HomeScreen(props) {
         if (itemIndex !== -1) {
             copyMyFavoritePlaces.splice(itemIndex, 1);
         } else {
-            copyMyFavoritePlaces.push({ ID: item.ID, Name: item.Name, Location: `${item.City}${item.Town}` });
+            copyMyFavoritePlaces.push({ Key: item.ID, ID: item.ID, Name: item.Name, Location: `${item.City}${item.Town}` });
         }
-        console.log('copyMyFavoritePlaces', copyMyFavoritePlaces);
         setMyFavoritePlaces(copyMyFavoritePlaces);
     }
 

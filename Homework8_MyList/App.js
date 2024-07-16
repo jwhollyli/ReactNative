@@ -14,7 +14,6 @@ import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 // icon: https://icons.expo.fyi/Index
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-// const { colors } = useTheme();//Error: Hooks can only be called inside the body of a function component.
 function HomeStackScreen() {
   const { colors } = useTheme();
   return (
@@ -87,7 +86,7 @@ const MainTabs = () => {
         tabBarActiveTintColor: colors.tabActiveTint,
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#F8D0C3',
+          backgroundColor: colors.tabBackground,
         }
       })}>
 

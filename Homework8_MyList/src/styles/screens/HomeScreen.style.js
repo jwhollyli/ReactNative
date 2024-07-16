@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const createStyles = ({ colors, screenWidth }) => StyleSheet.create({
+export default createStyles = (colors, screenWidth) => StyleSheet.create({
     placeCardContainer: {
         height: 100,
         width: screenWidth - 10,
@@ -37,7 +37,7 @@ export const createStyles = ({ colors, screenWidth }) => StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 10,
         margin: 5,
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.background,
     },
     noItemsText: {
         color: colors.third,

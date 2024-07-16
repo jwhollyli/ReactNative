@@ -5,11 +5,34 @@ export default createStyles = (colors) => StyleSheet.create({
         backgroundColor: colors.container,
         width: '95%',
         borderRadius: 10,
+        borderRadius: 10,
         marginTop: 10,
         marginBottom: 0,
         marginLeft: 10,
         marginRight: 10,
         alignItems: 'center',
+    },
+    labelText: {
+        color: colors.primary,
+        fontSize: 15,
+        textAlign: 'right',
+        fontWeight: 'bold',
+        margin: 10,
+        marginRight: 5,
+    },
+    textinputText: {
+        color: colors.secondary,
+        fontSize: 15,
+        height: 40,
+        backgroundColor: colors.background,
+        borderRadius: 5,
+    },
+    multiTextInputText: {
+        color: colors.secondary,
+        fontSize: 15,
+        height: 160,
+        backgroundColor: colors.background,
+        borderRadius: 5,
     },
     settingTitleContainer: {
         flexDirection: 'row',
@@ -22,6 +45,7 @@ export default createStyles = (colors) => StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         alignSelf: 'center',
+        paddingLeft: 30,
     },
     infoRowContainer: {
         flexDirection: 'row'
@@ -34,20 +58,5 @@ export default createStyles = (colors) => StyleSheet.create({
         flex: 0.8,
         margin: 10,
         justifyContent: 'center'
-    },
-    labelText: {
-        color: colors.primary,
-        fontSize: 15,
-        textAlign: 'right',
-        fontWeight: 'bold',
-        margin: 10,
-        marginRight: 5,
-    },
-    text: {
-        color: colors.secondary,
-        fontSize: 15,
-        textAlign: 'left',
-        margin: 10,
-        marginLeft: 0,
     },
 });

@@ -1,15 +1,18 @@
 import { StyleSheet } from "react-native";
 
-export const createStyles = (colors) => StyleSheet.create({
+export default createStyles = (colors) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFF4EB',
+        backgroundColor: colors.container,
         alignItems: 'center',
     },
+    scrollContainer: {
+        margin: 10
+    },
     placeName: {
-        color: '#812222',
+        color: colors.primary,
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 18,
         textAlign: 'left',
         margin: 5,
     },
@@ -20,14 +23,24 @@ export const createStyles = (colors) => StyleSheet.create({
         alignSelf: 'center'
     },
     text: {
-        color: '#DE7D7D',
-        fontSize: 16,
+        color: colors.secondary,
+        fontSize: 15,
         textAlign: 'left',
         margin: 5,
     },
+    cardsInfoContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 5
+    },
+    cardInfoContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 15
+    },
     cardsInfoText: {
-        color: '#812222',
-        fontSize: 16,
+        color: colors.primary,
+        fontSize: 15,
         textAlign: 'left',
         fontWeight: 'bold',
         margin: 5,
