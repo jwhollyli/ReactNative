@@ -41,4 +41,9 @@ export default createGlobalStyles = (colors) => StyleSheet.create({
         fontWeight: 'bold',
         margin: 5,
     },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });

@@ -11,6 +11,7 @@ import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 
 // npm install @react-navigation/bottom-tabs
 // npm install @react-navigation/stack
+// npm install -D react-native-dotenv
 // icon: https://icons.expo.fyi/Index
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

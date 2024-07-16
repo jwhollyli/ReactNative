@@ -1,4 +1,4 @@
-import { Text, View, FlatList, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View, FlatList, Image, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
@@ -7,10 +7,10 @@ import { useTheme } from '../contexts/ThemeContext';
 import createGlobalStyles from '../styles/GlobalStyles';
 import createPickerSelectStyles from '../styles/PickerSelectStyles';
 import createStyles from '../styles/screens/HomeScreen.style';
+import { API_BASE_URL, TRAVEL_FOOD_URL } from "@env"
 // npm install react-native-picker-select
 // npm install @react-native-picker/picker
 
-// TODO: 增加載入動畫
 export default function HomeScreen(props) {
     const [isLoading, setIsLoading] = useState(true);
     const [dataSource, setDataSource] = useState([]);                   //地方美食公開資料原始清單
@@ -28,11 +28,15 @@ export default function HomeScreen(props) {
     const styles = createStyles(colors, Dimensions.get('window').width);
     const pickerSelectStyles = createPickerSelectStyles(colors);
 
+    const sleep = (ms) => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    };
+
     // 取得農村地方美食小吃特色料理 公開資料
     useEffect(() => {
         // 取得地方美食清單, 並依照資料彙整City+Town Unique資料
         const fetchData = async () => {
-            const REQUEST_URL = 'https://data.moa.gov.tw/Service/OpenData/ODwsv/ODwsvTravelFood.aspx';
+            const REQUEST_URL = new URL(TRAVEL_FOOD_URL, API_BASE_URL).toString();
             try {
                 let response = await fetch(REQUEST_URL);
                 let result = await response.json();
@@ -135,9 +139,18 @@ export default function HomeScreen(props) {
         if (itemIndex !== -1) {
             copyMyFavoritePlaces.splice(itemIndex, 1);
         } else {
-            copyMyFavoritePlaces.push({ Key: item.ID, ID: item.ID, Name: item.Name, Location: `${item.City}${item.Town}` });
+            copyMyFavoritePlaces.push({ ID: item.ID, Name: item.Name, Location: `${item.City}${item.Town}` });
         }
         setMyFavoritePlaces(copyMyFavoritePlaces);
+    }
+
+    if (isLoading) {
+        return (
+            <View style={globalStyles.loadingContainer}>
+                <ActivityIndicator size="large" color={colors.third} />
+                <Text style={globalStyles.text}>Loading...</Text>
+            </View>
+        );
     }
 
     return (

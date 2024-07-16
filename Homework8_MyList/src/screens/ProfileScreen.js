@@ -5,6 +5,7 @@ import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import { useTheme } from '../contexts/ThemeContext';
 import createGlobalStyles from '../styles/GlobalStyles';
 import createStyles from '../styles/screens/ProfileScreen.style';
+import { ENV } from "@env"
 
 export default function ProfileScreen(props) {
     const [myName, setMyName] = useState('');
@@ -100,9 +101,9 @@ export default function ProfileScreen(props) {
                 {myFavoritePlaces.length === 0 && <Text style={styles.text}>No Items</Text>}
                 {myFavoritePlaces.map((item, index) => {
                     return (
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View key={item.ID} style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <MaterialIcons name="place" size={24} color={colors.primary} />
-                            <Text key={item.Key} style={[styles.text, { textAlign: 'center' }]}>{item.Name}({item.Location})</Text>
+                            <Text style={[styles.text, { textAlign: 'center' }]}>{item.Name}({item.Location})</Text>
                         </View>
                     )
                 })}
@@ -110,10 +111,10 @@ export default function ProfileScreen(props) {
             <TouchableOpacity style={globalStyles.button} onPress={toggleTheme}>
                 <Text style={globalStyles.buttonText}>Change Theme</Text>
             </TouchableOpacity>
-            {/* TODO: 加上環境變數判斷是否顯示清除資料按鈕 */}
-            <TouchableOpacity style={globalStyles.button} onPress={clearMyData}>
-                <Text style={globalStyles.buttonText}>Clear My Data</Text>
-            </TouchableOpacity>
+            {ENV === 'development' &&
+                <TouchableOpacity style={globalStyles.button} onPress={clearMyData}>
+                    <Text style={globalStyles.buttonText}>Clear My Data</Text>
+                </TouchableOpacity>}
         </View>
 
     );

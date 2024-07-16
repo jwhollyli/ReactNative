@@ -6,7 +6,6 @@ import { useTheme } from '../contexts/ThemeContext';
 import createGlobalStyles from '../styles/GlobalStyles';
 import createStyles from '../styles/screens/ProfileEditScreen.style';
 // import { usePreventRemove } from '@react-navigation/native'; //only for v7.x
-
 export default function ProfileEditScreen(props) {
     const [myName, setMyName] = useState(props.route.params.myName);
     const [myBio, setMyBio] = useState(props.route.params.myBio);
@@ -92,9 +91,10 @@ export default function ProfileEditScreen(props) {
                     </View>
                 </View>
             </View>
-            <TouchableOpacity style={globalStyles.button}>
+            <TouchableOpacity style={globalStyles.button}
+                onPress={onPressSave}>
                 <Entypo name="save" size={20} color={colors.buttonText} />
-                <Text style={globalStyles.buttonText} onPress={onPressSave}>Save</Text>
+                <Text style={globalStyles.buttonText}>Save</Text>
             </TouchableOpacity>
         </View>
     );
