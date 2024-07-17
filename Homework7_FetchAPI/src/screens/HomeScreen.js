@@ -90,7 +90,8 @@ export default function HomeScreen(props) {
                             style={styles.placeNameText}>
                             {item.Name}
                         </Text>
-                        <Text style={globalStyles.text}>
+                        <Text
+                            style={globalStyles.text}>
                             {item.Address}
                         </Text>
                     </View>
@@ -115,7 +116,7 @@ export default function HomeScreen(props) {
 
     return (
         <View style={globalStyles.container}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={styles.pickerSelectorContainer}>
                 <RNPickerSelect style={pickerSelectStyles}
                     placeholder={{ label: '選擇縣市', value: null }}
                     value={selectedCity}
@@ -131,7 +132,7 @@ export default function HomeScreen(props) {
                     }}
                     items={townDataSource.map((value, index) => ({ label: value, value: value, key: index }))} />
             </View>
-            <View style={{ flex: 9 }}>
+            <View style={styles.placeListContainer}>
                 <FlatList
                     data={placesDataSource}
                     keyExtractor={item => item.ID}
