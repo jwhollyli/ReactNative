@@ -33,6 +33,7 @@ export default createStyles = (colors, screenWidth) => StyleSheet.create({
     },
     placeInfoContainer: {
         marginLeft: 10,
+        width: screenWidth - 110,   // 90 + 10 + 10
     },
     placeNameText: {
         color: colors.primary,
@@ -59,5 +60,11 @@ export default createStyles = (colors, screenWidth) => StyleSheet.create({
         color: colors.secondary,
         fontWeight: 'bold',
         alignSelf: 'flex-end'
+    },
+    pickerSelectorContainer: {
+        flexDirection: 'row',
+    },
+    placeListContainer: {
+        flex: 9
     },
 });
